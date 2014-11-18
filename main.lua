@@ -8,12 +8,13 @@ else
 	GTerm.CanWrite = file.Exists( "garrysmod/lua/bin/gmsv_fileio_win32.dll", "BASE_PATH" )
 end
 
-
-
 function GTerm.pwd()
-	print(GTerm.Path .. "/")
+	if GTerm.Path == "" then 
+		print("./")
+	else
+		print(GTerm.Path)
+	end
 end
-
 
 function GTerm.ls()
 	local tbl1, tbl2 = file.Find(GTerm.Path .. "*", "BASE_PATH")
