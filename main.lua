@@ -9,11 +9,7 @@ else
 end
 
 function GTerm.pwd()
-	if GTerm.Path == "" then 
-		print("./")
-	else
-		print(GTerm.Path)
-	end
+	print("./" .. GTerm.Path)
 end
 
 function GTerm.ls()
