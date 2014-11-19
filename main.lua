@@ -25,11 +25,10 @@ end
 
 
 function GTerm.mkdir(ply, cmd, args)
-	if not GTerm.CanWrite then fuckalert("module fileio is missing")
+	if not GTerm.CanWrite then fuckalert("module fileio is missing") return end
 	if not args[1] then return end
 	if file.Exists(GTerm.Path .. args[1], "BASE_PATH") or file.IsDir(GTerm.Path .. args[1], "BASE_PATH") then return end
 	---fileio.MakeDirectory() -- later
-
 end
 
 function GTerm.ls()
