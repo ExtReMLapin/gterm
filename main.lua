@@ -72,8 +72,6 @@ function GTerm.ls()
 	end
 
 local function pastfolder()
-	print(GTerm.Path)
-
 	local tblspl = string.Explode("/", GTerm.Path)
 		table.remove(tblspl)
 		table.remove(tblspl)
