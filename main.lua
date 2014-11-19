@@ -85,7 +85,7 @@ end
 function pathsanitise(text)
 	local text1 = text
 	if string.reverse(text1)[1] == "/" then
-		text1 = string.Right(text1, 1)
+		text1 = string.Right(text1, string.len(text1)-1)
 	end
 	return text1
 end
