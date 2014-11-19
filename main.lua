@@ -85,6 +85,7 @@ end
 function GTerm.cd(ply, cmd, args) -- darn
 	if not args or table.Count(args) == 0 then return end
 	if table.Count(args) == 1 and args[1] != "" then
+		if args[1][#args1] == "/" then table.remove(args[1])
 		if args[1][1] == "."  and GTerm.Path == "" then return end
 		if args[1] == ".." then
 			pastfolder()
