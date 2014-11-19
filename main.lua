@@ -13,6 +13,7 @@ end
 
 function GTerm.ls()
 	local maxsize = 0;
+	local maxsize2 = 0;
 	local tbl1, tbl2 = file.Find(GTerm.Path .. "*", "BASE_PATH")
 
 		for k, v in pairs(tbl2) do -- folders
@@ -25,18 +26,30 @@ function GTerm.ls()
 			end
 		end
 
-
 		for k, v in pairs(tbl1) do -- files
-			local i = 0;
+			if string.len(tostring(file.Size(GTerm.Path .. v, "BASE_PATH"))) > maxsize then 
+				maxsize2 = string.len(tostring(file.Size(GTerm.Path .. v, "BASE_PATH"))) 
+			end
+		end
+
+
+		for k, v in pairs(tbl1) do 
 			local strlen = string.len(v)
+			local strlen2 = tostring(file.Size(GTerm.Path .. v, "BASE_PATH"))
+
 			MsgC(Color(150,150,255), v);
 			while (strlen < maxsize) do
 				MsgC(Color(150,150,255), " ");
 				strlen = strlen + 1
 			end
-			MsgC(Color(255,0,0), " | ");
+			MsgC(Color(255,0,0), " | Size -> ");
 			MsgC(Color(150,150,255), file.Size(GTerm.Path .. v, "BASE_PATH"));
-			MsgC(Color(255,0,0), " | ");
+			while (strlen2 < maxsize2) do
+				MsgC(Color(150,150,255), " ");
+				strlen2 = strlen2 + 1
+			end
+
+			MsgC(Color(255,0,0), " | Last time edited -> ");
 			MsgC(Color(150,150,255), os.date( "%d.%m.%y", file.Time(GTerm.Path .. v, "BASE_PATH")) .. "\n");
 		end
 	end
