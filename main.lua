@@ -38,7 +38,9 @@ function GTerm.cd(ply, cmd, args) -- darn
 			GTerm.Path = table.concat(tblspl, "/") or ""
 			return
 		end
-		GTerm.Path = GTerm.Path .. args[1] .. "/"
+		if (file.IsDir(GTerm.Path .. args[1] .. "/", "BASE_PATH")) then
+			GTerm.Path = GTerm.Path .. args[1] .. "/"
+		end
 	end
 end
 
