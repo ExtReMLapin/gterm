@@ -82,22 +82,34 @@ local function pastfolder()
 	return
 end
 
+function pathsanitise(text)
+	local text1 = text
+	if string.reverse(text1)[1] == "/" then
+		text1 = string.Right(text1, 1)
+	end
+	return text1
+end
+
+
 function GTerm.cd(ply, cmd, args) -- darn
 	if not args or table.Count(args) == 0 then return end
-	if table.Count(args) == 1 and args[1] != "" then
-		if args[1][1] == "."  and GTerm.Path == "" then return end
-		if args[1] == ".." then
+	text = args[1]
+	text = pathsanitise(text)
+
+	if table.Count(args) == 1 and text  != "" then
+		if text[1] == "."  and GTerm.Path == "" then return end
+		if text == ".." then
 			pastfolder()
 			return			
 		end
-		if (file.IsDir(GTerm.Path .. args[1] .. "/", "BASE_PATH")) then
-			GTerm.Path = GTerm.Path .. args[1] .. "/"
+		if (file.IsDir(GTerm.Path .. text .. "/", "BASE_PATH")) then
+			GTerm.Path = GTerm.Path .. text .. "/"
 		end
 
-		if string.Left(args[1], 3) == "../" and string.len(args[1]) > 3 then
+		if string.Left(text, 3) == "../" and string.len(args[1]) > 3 then
 			pastfolder()
-			if (file.IsDir(GTerm.Path ..string.Right(args[1], string.len(args[1]) - 3) .. "/", "BASE_PATH")) then
-				GTerm.Path = GTerm.Path .. string.Right(args[1], string.len(args[1]) - 3)
+			if (file.IsDir(GTerm.Path ..string.Right(text, string.len(args[1]) - 3) .. "/", "BASE_PATH")) then
+				GTerm.Path = GTerm.Path .. string.Right(text, string.len(args[1]) - 3)
 			end
 			GTerm.Path = GTerm.Path .. "/"
 		end
