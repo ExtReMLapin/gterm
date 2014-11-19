@@ -20,7 +20,7 @@ end
 local function fuckalert(message)
 	MsgC(Color(255,0,0), "/!\\   ");
 	MsgC(Color(255,215,0), message);
-	MsgC(Color(255,0,0), "   /!\\");
+	MsgC(Color(255,0,0), "   /!\\ \n");
 end
 
 
