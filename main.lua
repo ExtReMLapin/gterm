@@ -99,6 +99,7 @@ function GTerm.cd(ply, cmd, args) -- darn
 			pastfolder()
 			if (file.IsDir(GTerm.Path ..string.Right(args[1], string.len(args[1]) - 3) .. "/", "BASE_PATH")) then
 				GTerm.Path = GTerm.Path .. string.Right(args[1], string.len(args[1]) - 3)
+			end
 		end
 	end
 end
