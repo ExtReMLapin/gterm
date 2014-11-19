@@ -12,6 +12,7 @@ function GTerm.pwd()
 end
 
 function GTerm.ls()
+	local maxsize = 0;
 	local tbl1, tbl2 = file.Find(GTerm.Path .. "*", "BASE_PATH")
 
 		for k, v in pairs(tbl2) do -- folders
@@ -19,7 +20,20 @@ function GTerm.ls()
 		end
 
 		for k, v in pairs(tbl1) do -- files
+			if string.len(v) > maxsize then 
+				maxsize = string.len(v) 
+			end
+		end
+
+
+		for k, v in pairs(tbl1) do -- files
+			local i = 0;
+			local strlen = string.len(v)
 			MsgC(Color(150,150,255), v);
+			while (strlen < maxsize) do
+				MsgC(Color(150,150,255), " ");
+				strlen = strlen + 1
+			end
 			MsgC(Color(255,0,0), " | ");
 			MsgC(Color(150,150,255), string.len(file.Read(GTerm.Path .. v, "BASE_PATH")) .. "\n");
 		end
