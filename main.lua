@@ -75,10 +75,14 @@ function GTerm.ls()
 	end
 
 local function pastfolder()
+	print(GTerm.Path)
+
 	local tblspl = string.Explode("/", GTerm.Path)
 		table.remove(tblspl)
+print(table.concat(tblspl, "/"))
 		table.remove(tblspl)
-		GTerm.Path = table.concat(tblspl, "/") or ""
+print(table.concat(tblspl, "/"))
+		GTerm.Path = table.concat(tblspl, "/") .. "/" or ""
 	return
 end
 
