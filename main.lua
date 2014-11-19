@@ -106,3 +106,4 @@ end
 concommand.Add("pwd", GTerm.pwd,		file.Find("*", "BASE_PATH")[1], "print current folder")
 concommand.Add("ls",  GTerm.ls,			{"no args"}, 					"print files and folders in current folder")
 concommand.Add("cd",  GTerm.cd,			file.Find("*", "BASE_PATH")[2], "go in another folder")
+concommand.Add("mkdir", GTerm.mkdir)
