@@ -37,7 +37,7 @@ function GTerm.ls()
 			MsgC(Color(255,0,0), " | ");
 			MsgC(Color(150,150,255), file.Size(GTerm.Path .. v, "BASE_PATH"));
 			MsgC(Color(255,0,0), " | ");
-			MsgC(Color(150,150,255), file.Time(GTerm.Path .. v, "BASE_PATH") .. "\n");
+			MsgC(Color(150,150,255), os.date( "%Od.%Om.%Oy", file.Time(GTerm.Path .. v, "BASE_PATH")));
 		end
 	end
 
