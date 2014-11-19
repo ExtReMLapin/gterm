@@ -1,5 +1,4 @@
 GTerm = {}
-
 GTerm.Path = "";
 
 if system.IsLinux() then
@@ -16,11 +15,13 @@ function GTerm.ls()
 	local tbl1, tbl2 = file.Find(GTerm.Path .. "*", "BASE_PATH")
 
 		for k, v in pairs(tbl2) do -- folders
-			print(string.format("./%s/", v))
+			MsgC(Color(50,250,50), string.format("./%s/\n", v))
 		end
 
 		for k, v in pairs(tbl1) do -- files
-			print(string.format("%s | %i", v, string.len(file.Read(GTerm.Path .. v, "BASE_PATH"))))
+			MsgC(Color(150,150,255), v);
+			MsgC(Color(255,0,0), " | ");
+			MsgC(Color(150,150,255), string.len(file.Read(GTerm.Path .. v, "BASE_PATH")));
 		end
 	end
 
