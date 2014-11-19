@@ -39,22 +39,30 @@ function GTerm.ls()
 		end
 	end
 
+local function pastfolder()
+	local tblspl = string.Explode("/", GTerm.Path)
+		table.remove(tblspl)
+		table.remove(tblspl)
+		GTerm.Path = table.concat(tblspl, "/") or ""
+	return
+end
+
 
 function GTerm.cd(ply, cmd, args) -- darn
 	if not args or table.Count(args) == 0 then return end
-
 	if table.Count(args) == 1 and args[1] != "" then
 		if args[1][1] == "."  and GTerm.Path == "" then return end
 		if args[1] == ".." then
-			local tblspl = string.Explode("/", GTerm.Path)
-			table.remove(tblspl)
-			table.remove(tblspl)
-			GTerm.Path = table.concat(tblspl, "/") or ""
-			return
+			pastfolder()
+			return			
 		end
 		if (file.IsDir(GTerm.Path .. args[1] .. "/", "BASE_PATH")) then
 			GTerm.Path = GTerm.Path .. args[1] .. "/"
 		end
+
+		if string.Left(args[1], 3) == "../" and string.len(args[1] > 3) then
+			pastfolder()	
+			GTerm.Path = GTerm.Path .. string.Right(args[1], string.len(args[1] - 3))
 	end
 end
 
