@@ -8,7 +8,7 @@ else
 end
 
 function GTerm.pwd()
-	print("./" .. GTerm.Path)
+	MsgC(Color(50,250,50), "./" .. GTerm.Path)
 end
 
 function GTerm.ls()
