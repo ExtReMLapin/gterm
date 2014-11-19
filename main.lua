@@ -35,7 +35,7 @@ function GTerm.ls()
 
 		for k, v in pairs(tbl1) do 
 			local strlen = string.len(v)
-			local strlen2 = tostring(file.Size(GTerm.Path .. v, "BASE_PATH"))
+			local strlen2 = string.len(tostring(file.Size(GTerm.Path .. v, "BASE_PATH")))
 
 			MsgC(Color(150,150,255), v);
 			while (strlen < maxsize) do
