@@ -27,7 +27,7 @@ function GTerm.ls()
 		end
 
 		for k, v in pairs(tbl1) do -- files
-			if string.len(tostring(file.Size(GTerm.Path .. v, "BASE_PATH"))) > maxsize then 
+			if string.len(tostring(file.Size(GTerm.Path .. v, "BASE_PATH"))) > maxsize2 then 
 				maxsize2 = string.len(tostring(file.Size(GTerm.Path .. v, "BASE_PATH"))) 
 			end
 		end
