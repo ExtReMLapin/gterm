@@ -14,9 +14,6 @@ function GTerm.pwd()
 	MsgC(Color(50,250,50), "./" .. GTerm.Path .. "\n")
 end
 
-
-
-
 local function fuckalert(message)
 	MsgC(Color(255,0,0), "/!\\   ");
 	MsgC(Color(255,215,0), message);
@@ -79,9 +76,7 @@ local function pastfolder()
 
 	local tblspl = string.Explode("/", GTerm.Path)
 		table.remove(tblspl)
-print(table.concat(tblspl, "/"))
 		table.remove(tblspl)
-print(table.concat(tblspl, "/"))
 		GTerm.Path = table.concat(tblspl, "/") .. "/" or ""
 	return
 end
