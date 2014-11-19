@@ -7,8 +7,29 @@ else
 	GTerm.CanWrite = file.Exists( "garrysmod/lua/bin/gmsv_fileio_win32.dll", "BASE_PATH" )
 end
 
+if GTerm.CanWrite then require("fileio") end
+
+
 function GTerm.pwd()
 	MsgC(Color(50,250,50), "./" .. GTerm.Path .. "\n")
+end
+
+
+
+
+local function fuckalert(message)
+	MsgC(Color(255,0,0), "/!\\   ");
+	MsgC(Color(255,215,0), message);
+	MsgC(Color(255,0,0), "   /!\\");
+end
+
+
+function GTerm.mkdir(ply, cmd, args)
+	if not GTerm.CanWrite then fuckalert("module fileio is missing")
+	if not args[1] then return end
+	if file.Exists(GTerm.Path .. args[1], "BASE_PATH") or file.IsDir(GTerm.Path .. args[1], "BASE_PATH") then return end
+	---fileio.MakeDirectory() -- later
+
 end
 
 function GTerm.ls()
