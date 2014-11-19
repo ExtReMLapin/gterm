@@ -47,7 +47,6 @@ local function pastfolder()
 	return
 end
 
-
 function GTerm.cd(ply, cmd, args) -- darn
 	if not args or table.Count(args) == 0 then return end
 	if table.Count(args) == 1 and args[1] != "" then
@@ -60,9 +59,10 @@ function GTerm.cd(ply, cmd, args) -- darn
 			GTerm.Path = GTerm.Path .. args[1] .. "/"
 		end
 
-		if string.Left(args[1], 3) == "../" and string.len(args[1] > 3) then
+		if string.Left(args[1], 3) == "../" and string.len(args[1]) > 3 then
 			pastfolder()	
-			GTerm.Path = GTerm.Path .. string.Right(args[1], string.len(args[1] - 3))
+			GTerm.Path = GTerm.Path .. string.Right(args[1], string.len(args[1]) - 3)
+		end
 	end
 end
 
