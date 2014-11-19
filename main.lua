@@ -35,7 +35,7 @@ function GTerm.ls()
 				strlen = strlen + 1
 			end
 			MsgC(Color(255,0,0), " | ");
-			MsgC(Color(150,150,255), string.len(file.Read(GTerm.Path .. v, "BASE_PATH")) .. "\n");
+			MsgC(Color(150,150,255), file.Size(GTerm.Path .. v, "BASE_PATH") .. "\n");
 		end
 	end
 
