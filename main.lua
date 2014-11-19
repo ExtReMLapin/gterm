@@ -21,7 +21,7 @@ function GTerm.ls()
 		for k, v in pairs(tbl1) do -- files
 			MsgC(Color(150,150,255), v);
 			MsgC(Color(255,0,0), " | ");
-			MsgC(Color(150,150,255), string.len(file.Read(GTerm.Path .. v, "BASE_PATH")));
+			MsgC(Color(150,150,255), string.len(file.Read(GTerm.Path .. v, "BASE_PATH")) .. "\n");
 		end
 	end
 
