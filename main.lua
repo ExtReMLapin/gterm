@@ -75,7 +75,7 @@ function GTerm.ls() -- print files infos and directories
 
 		for k, v in pairs(tbl1) do -- files
 			if #tostring(file.Size(GTerm.Path .. v, "BASE_PATH")) > maxsize2 then 
-				maxsize2 = #tostring(file.Size(GTerm.Path .. v, "BASE_PATH")))
+				maxsize2 = #tostring(file.Size(GTerm.Path .. v, "BASE_PATH"))
 			end
 		end
 
