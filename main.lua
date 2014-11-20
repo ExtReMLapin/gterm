@@ -1,3 +1,5 @@
+local table = table
+
 GTerm = {}
 GTerm.Path = "";
 
