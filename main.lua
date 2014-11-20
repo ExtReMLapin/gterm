@@ -1,6 +1,33 @@
 GTerm = {}
 GTerm.Path = "";
 
+
+local function pastfolder()
+	local tblspl = string.Explode("/", GTerm.Path)
+		table.remove(tblspl)
+		table.remove(tblspl)
+		GTerm.Path = table.concat(tblspl, "/") .. "/" or ""
+	return
+end
+
+local function pathsanitise(text)
+	local text1 = text
+	while (string.reverse(text1)[1] == "/") do
+			text1 = string.Left(text1, string.len(text1)-1)
+	end
+	return text1
+end
+
+
+local function pathfixmultipleslash()
+	while ( string.find(GTerm.Path, "//") ) do
+		GTerm.Path = string.gsub(GTerm.Path, "//", "/")
+	end
+end
+
+
+
+
 if system.IsLinux() then
 	GTerm.CanWrite = file.Exists( "garrysmod/lua/bin/gmsv_fileio_linux.dll", "BASE_PATH" )
 else
@@ -74,28 +101,6 @@ function GTerm.ls()
 		end
 	end
 
-local function pastfolder()
-	local tblspl = string.Explode("/", GTerm.Path)
-		table.remove(tblspl)
-		table.remove(tblspl)
-		GTerm.Path = table.concat(tblspl, "/") .. "/" or ""
-	return
-end
-
-local function pathsanitise(text)
-	local text1 = text
-	while (string.reverse(text1)[1] == "/") do
-			text1 = string.Left(text1, string.len(text1)-1)
-	end
-	return text1
-end
-
-
-local function pathfixmultipleslash()
-	while ( string.find(GTerm.Path, "//") ) do
-		GTerm.Path = string.gsub(GTerm.Path, "//", "/")
-	end
-end
 
 
 function GTerm.cd(ply, cmd, args) -- darn
