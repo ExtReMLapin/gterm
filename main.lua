@@ -92,7 +92,7 @@ end
 
 
 local function pathfixmultipleslash()
-	while ( string.find(GTerm.Path, "//") )
+	while ( string.find(GTerm.Path, "//") ) do
 		GTerm.Path = string.gsub(GTerm.Path, "//", "/")
 	end
 end
