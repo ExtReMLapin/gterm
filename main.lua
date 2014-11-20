@@ -12,12 +12,11 @@ local function pastfolder()  -- from ./garrysmod/lua/ to ./garrysmod/
 	return
 end
 
-local function pathsanitise(text) -- remove last / 
-	local text1 = text
-	while (string.reverse(text1)[1] == "/") do
-			text1 = string.Left(text1,#(text1)-1)
+local function pathsanitise(text) -- remove last /
+	if string.sub( text, -1 ) == "/" then
+		return string.sub( text, 1, -2 )
 	end
-	return text1
+	return text
 end
 
 local function writeSpaces( num )
@@ -75,7 +74,7 @@ function GTerm.ls() -- print files infos and directories
 
 		for k, v in pairs(tbl1) do -- files
 			if #tostring(file.Size(GTerm.Path .. v, "BASE_PATH")) > maxsize2 then 
-				maxsize2 = #tostring(file.Size(GTerm.Path .. v, "BASE_PATH"))
+				maxsize2 = #tostring(file.Size(GTerm.Path .. v, "BASE_PATH")))
 			end
 		end
 
