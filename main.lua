@@ -13,11 +13,10 @@ local function pastfolder()  -- from ./garrysmod/lua/ to ./garrysmod/
 end
 
 local function pathsanitise(text) -- remove last / 
-	local text1 = text
 	while (string.reverse(text1)[1] == "/") do
 			text1 = string.Left(text1,#(text1)-1)
 	end
-	return text1
+	return text
 end
 
 local function writeSpaces( num )
