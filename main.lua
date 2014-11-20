@@ -2,7 +2,7 @@ GTerm = {}
 GTerm.Path = "";
 
 
-local function pastfolder()
+local function pastfolder()  -- from ./garrysmod/lua/ to ./garrysmod/
 	local tblspl = string.Explode("/", GTerm.Path)
 		table.remove(tblspl)
 		table.remove(tblspl)
@@ -10,7 +10,7 @@ local function pastfolder()
 	return
 end
 
-local function pathsanitise(text)
+local function pathsanitise(text) -- remove last / 
 	local text1 = text
 	while (string.reverse(text1)[1] == "/") do
 			text1 = string.Left(text1, string.len(text1)-1)
@@ -18,17 +18,13 @@ local function pathsanitise(text)
 	return text1
 end
 
-
-local function pathfixmultipleslash()
+local function pathfixmultipleslash() -- i can't identify my error, so i'm using this fix to remove "//" from path
 	while ( string.find(GTerm.Path, "//") ) do
 		GTerm.Path = string.gsub(GTerm.Path, "//", "/")
 	end
 end
 
-
-
-
-if system.IsLinux() then
+if system.IsLinux() then -- checking if we can write into folders
 	GTerm.CanWrite = file.Exists( "garrysmod/lua/bin/gmsv_fileio_linux.dll", "BASE_PATH" )
 else
 	GTerm.CanWrite = file.Exists( "garrysmod/lua/bin/gmsv_fileio_win32.dll", "BASE_PATH" )
@@ -37,7 +33,7 @@ end
 if GTerm.CanWrite then require("fileio") end
 
 
-function GTerm.pwd()
+function GTerm.pwd() -- print path
 	pathfixmultipleslash()
 	MsgC(Color(50,250,50), "./" .. GTerm.Path .. "\n")
 end
@@ -49,7 +45,7 @@ local function fuckalert(message)
 end
 
 
-function GTerm.mkdir(ply, cmd, args)
+function GTerm.mkdir(ply, cmd, args) -- make a new directory
 	pathfixmultipleslash()
 	if not GTerm.CanWrite then fuckalert("module fileio is missing") return end
 	if not args[1] then return end
@@ -57,7 +53,7 @@ function GTerm.mkdir(ply, cmd, args)
 	---fileio.MakeDirectory() -- later
 end
 
-function GTerm.ls()
+function GTerm.ls() -- print files infos and directories
 	pathfixmultipleslash()
 	local maxsize = 0;
 	local maxsize2 = 0;
@@ -103,7 +99,7 @@ function GTerm.ls()
 
 
 
-function GTerm.cd(ply, cmd, args) -- darn
+function GTerm.cd(ply, cmd, args) -- fall back !
 	pathfixmultipleslash()
 	if not args or table.Count(args) == 0 then return end
 	text = args[1]
