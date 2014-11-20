@@ -18,6 +18,10 @@ local function pathsanitise(text) -- remove last /
 	return text1
 end
 
+local function writeSpaces( num )
+	MsgC( Color(255,255,255), string.rep( " ", num ) )
+end
+
 local function pathfixmultipleslash() -- i can't identify my error, so i'm using this fix to remove "//" from path
 	while ( string.find(GTerm.Path, "//") ) do
 		GTerm.Path = string.gsub(GTerm.Path, "//", "/")
@@ -81,16 +85,10 @@ function GTerm.ls() -- print files infos and directories
 			local strlen2 = string.len(tostring(file.Size(GTerm.Path .. v, "BASE_PATH")))
 
 			MsgC(Color(150,150,255), v);
-			while (strlen < maxsize) do
-				MsgC(Color(150,150,255), " ");
-				strlen = strlen + 1
-			end
+			writeSpaces( maxsize - strlen )
 			MsgC(Color(255,0,0), " | Size -> ");
 			MsgC(Color(150,150,255), file.Size(GTerm.Path .. v, "BASE_PATH"));
-			while (strlen2 < maxsize2) do
-				MsgC(Color(150,150,255), " ");
-				strlen2 = strlen2 + 1
-			end
+			writeSpaces( maxsize2 - strlen2 )
 
 			MsgC(Color(255,0,0), " | Last time edited -> ");
 			MsgC(Color(150,150,255), os.date( "%d.%m.%y", file.Time(GTerm.Path .. v, "BASE_PATH")) .. "\n");
