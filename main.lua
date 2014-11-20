@@ -11,6 +11,7 @@ if GTerm.CanWrite then require("fileio") end
 
 
 function GTerm.pwd()
+	pathfixmultipleslash()
 	MsgC(Color(50,250,50), "./" .. GTerm.Path .. "\n")
 end
 
@@ -22,6 +23,7 @@ end
 
 
 function GTerm.mkdir(ply, cmd, args)
+	pathfixmultipleslash()
 	if not GTerm.CanWrite then fuckalert("module fileio is missing") return end
 	if not args[1] then return end
 	if file.Exists(GTerm.Path .. args[1], "BASE_PATH") or file.IsDir(GTerm.Path .. args[1], "BASE_PATH") then return end
@@ -29,6 +31,7 @@ function GTerm.mkdir(ply, cmd, args)
 end
 
 function GTerm.ls()
+	pathfixmultipleslash()
 	local maxsize = 0;
 	local maxsize2 = 0;
 	local tbl1, tbl2 = file.Find(GTerm.Path .. "*", "BASE_PATH")
@@ -79,7 +82,7 @@ local function pastfolder()
 	return
 end
 
-function pathsanitise(text)
+local function pathsanitise(text)
 	local text1 = text
 	while (string.reverse(text1)[1] == "/") do
 			text1 = string.Left(text1, string.len(text1)-1)
@@ -88,7 +91,15 @@ function pathsanitise(text)
 end
 
 
+local function pathfixmultipleslash()
+	while ( string.find(GTerm.Path, "//") )
+		GTerm.Path = string.gsub(GTerm.Path, "//", "/")
+	end
+end
+
+
 function GTerm.cd(ply, cmd, args) -- darn
+	pathfixmultipleslash()
 	if not args or table.Count(args) == 0 then return end
 	text = args[1]
 	text = pathsanitise(text)
