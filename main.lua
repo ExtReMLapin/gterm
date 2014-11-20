@@ -4,16 +4,16 @@ GTerm.Path = "";
 
 local function pastfolder()  -- from ./garrysmod/lua/ to ./garrysmod/
 	local tblspl = string.Explode("/", GTerm.Path)
-	table.remove(tblspl)
-	table.remove(tblspl)
-	GTerm.Path = table.concat(tblspl, "/") .. "/" or ""
+		table.remove(tblspl)
+		table.remove(tblspl)
+		GTerm.Path = table.concat(tblspl, "/") .. "/" or ""
 	return
 end
 
 local function pathsanitise(text) -- remove last / 
 	local text1 = text
 	while (string.reverse(text1)[1] == "/") do
-		text1 = string.Left(text1, string.len(text1)-1)
+			text1 = string.Left(text1,#(text1)-1)
 	end
 	return text1
 end
@@ -68,21 +68,21 @@ function GTerm.ls() -- print files infos and directories
 		end
 
 		for k, v in pairs(tbl1) do -- files
-			if string.len(v) > maxsize then 
-				maxsize = string.len(v) 
+			if #v > maxsize then 
+				maxsize = #v
 			end
 		end
 
 		for k, v in pairs(tbl1) do -- files
-			if string.len(tostring(file.Size(GTerm.Path .. v, "BASE_PATH"))) > maxsize2 then 
-				maxsize2 = string.len(tostring(file.Size(GTerm.Path .. v, "BASE_PATH"))) 
+			if #tostring(file.Size(GTerm.Path .. v, "BASE_PATH")) > maxsize2 then 
+				maxsize2 = #tostring(file.Size(GTerm.Path .. v, "BASE_PATH")))
 			end
 		end
 
 
 		for k, v in pairs(tbl1) do 
-			local strlen = string.len(v)
-			local strlen2 = string.len(tostring(file.Size(GTerm.Path .. v, "BASE_PATH")))
+			local strlen = #v
+			local strlen2 =#tostring(file.Size(GTerm.Path .. v, "BASE_PATH"))
 
 			MsgC(Color(150,150,255), v);
 			writeSpaces( maxsize - strlen )
@@ -113,10 +113,10 @@ function GTerm.cd(ply, cmd, args) -- fall back !
 			GTerm.Path = GTerm.Path .. text .. "/"
 		end
 
-		if string.Left(text, 3) == "../" and string.len(args[1]) > 3 then
+		if string.Left(text, 3) == "../" and #args[1] > 3 then
 			pastfolder()
-			if (file.IsDir(GTerm.Path ..string.Right(text, string.len(args[1]) - 3) .. "/", "BASE_PATH")) then
-				GTerm.Path = GTerm.Path .. string.Right(text, string.len(args[1]) - 3) .. "/"
+			if (file.IsDir(GTerm.Path ..string.Right(text, #args[1] - 3) .. "/", "BASE_PATH")) then
+				GTerm.Path = GTerm.Path .. string.Right(text, #args[1] - 3) .. "/"
 			end
 			--GTerm.Path = GTerm.Path .. "/"
 		end
