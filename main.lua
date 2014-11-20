@@ -97,11 +97,11 @@ function GTerm.ls() -- print files infos and directories
 
 function GTerm.cd(ply, cmd, args) -- fall back !
 	pathfixmultipleslash()
-	if not args or table.Count(args) == 0 then return end
+	if not args or #args == 0 then return end
 	text = args[1]
 	text = pathsanitise(text)
 
-	if table.Count(args) == 1 and text  != "" then
+	if #args == 1 and text  != "" then
 		if text[1] == "."  and GTerm.Path == "" then return end
 		if text == ".." then
 			pastfolder()
