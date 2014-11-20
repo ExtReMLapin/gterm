@@ -106,9 +106,9 @@ function GTerm.cd(ply, cmd, args) -- darn
 		if string.Left(text, 3) == "../" and string.len(args[1]) > 3 then
 			pastfolder()
 			if (file.IsDir(GTerm.Path ..string.Right(text, string.len(args[1]) - 3) .. "/", "BASE_PATH")) then
-				GTerm.Path = GTerm.Path .. string.Right(text, string.len(args[1]) - 3)
+				GTerm.Path = GTerm.Path .. string.Right(text, string.len(args[1]) - 3) .. "/"
 			end
-			GTerm.Path = GTerm.Path .. "/"
+			--GTerm.Path = GTerm.Path .. "/"
 		end
 	end
 end
