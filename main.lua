@@ -23,9 +23,7 @@ local function writeSpaces( num )
 end
 
 local function pathfixmultipleslash() -- i can't identify my error, so i'm using this fix to remove "//" from path
-	while ( string.find(GTerm.Path, "//") ) do
-		GTerm.Path = string.gsub(GTerm.Path, "//", "/")
-	end
+	GTerm.Path = string.gsub(GTerm.Path, "//", "/")
 end
 
 if system.IsLinux() then -- checking if we can write into folders
