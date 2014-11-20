@@ -4,16 +4,16 @@ GTerm.Path = "";
 
 local function pastfolder()  -- from ./garrysmod/lua/ to ./garrysmod/
 	local tblspl = string.Explode("/", GTerm.Path)
-		table.remove(tblspl)
-		table.remove(tblspl)
-		GTerm.Path = table.concat(tblspl, "/") .. "/" or ""
+	table.remove(tblspl)
+	table.remove(tblspl)
+	GTerm.Path = table.concat(tblspl, "/") .. "/" or ""
 	return
 end
 
 local function pathsanitise(text) -- remove last / 
 	local text1 = text
 	while (string.reverse(text1)[1] == "/") do
-			text1 = string.Left(text1, string.len(text1)-1)
+		text1 = string.Left(text1, string.len(text1)-1)
 	end
 	return text1
 end
