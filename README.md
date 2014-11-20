@@ -1,5 +1,6 @@
 GTerm
 =====
 
+Eh ?
 
-Just fucking learn unix commands
+It's like shell .. but with gmod ...
