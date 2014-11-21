@@ -3,7 +3,6 @@ local table = table
 GTerm = {}
 GTerm.Path = "";
 
-
 local function pastfolder()  -- from ./garrysmod/lua/ to ./garrysmod/
 	local tblspl = string.Explode("/", GTerm.Path)
 		table.remove(tblspl)
