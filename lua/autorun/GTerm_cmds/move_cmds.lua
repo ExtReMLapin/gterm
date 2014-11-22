@@ -1,7 +1,4 @@
-
-
 GTerm.Path = "";
-
 
 local function pathfixmultipleslash() -- i can't identify my error, so i'm using this fix to remove "//" from path
 	GTerm.Path = string.gsub(GTerm.Path, "//", "/")

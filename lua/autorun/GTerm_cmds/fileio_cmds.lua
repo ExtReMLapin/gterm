@@ -1,5 +1,3 @@
-
-
 if system.IsLinux() then -- checking if we can write into folders
 	GTerm.CanWrite = file.Exists( "garrysmod/lua/bin/gmsv_fileio_linux.dll", "BASE_PATH" )
 else

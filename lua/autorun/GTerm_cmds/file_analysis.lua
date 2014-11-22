@@ -1,6 +1,3 @@
-
-
-
 FReader = {}
 
 FReader.Headers = {}

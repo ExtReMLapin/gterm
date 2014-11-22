@@ -1,4 +1,3 @@
-
 GTerm = {}
 
 function GTerm.writeSpaces( num )
