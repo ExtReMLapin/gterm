@@ -11,6 +11,11 @@ local function pathsanitise(text) -- remove last /
 	return text
 end
 
+local function file_exists(f)
+	if file.Exists(f, "BASE_PATH") then return true end
+end
+
+
 function GTerm.ls() -- print files infos and directories
 	pathfixmultipleslash()
 	local maxsize = 0;
@@ -68,7 +73,21 @@ function GTerm.cat(client, command, arguments)
 	args = arguments
 	number_of_args = table.getn(args)
 
+	local function cat_to_ascii(str)
+		if !file_exists(str) then return end
+		local text = file.Read(str, "BASE_PATH") --Set text
+		local text = string.Explode("", text) --break the text up into a table. Each letter is a element in the table.
+		local ascii = {} --Ascii values for letter will go here.
+		for k, v in pairs(text) do --For each letter in text
+			table.insert(ascii, string.byte(v)) --Turn it to ascii
+		end
+		return ascii, text
+	end
+
 	if number_of_args == 1 then
+		local file_path = tostring(GTerm.Path)
+		local file_name = tostring(args[1])
+		local tocat = file_path .. file_name
 
 		--Not exactly the best way to do it. But ghetto always works.
 		--If there is one argument it will either be help or to read
@@ -89,33 +108,37 @@ function GTerm.cat(client, command, arguments)
 
 			
 		else --Otherwise it will just print a file.
-			if file.Exists(GTerm.Path .. args[1], "BASE_PATH") then --Check if the file exists.
+			if !file_exists(tocat) then GTerm.fuckalert("File does not exist.") return end --Check if the file exists. If it doesn't display an error
+
 				MsgC(Color(255,255,255), file.Read(GTerm.Path .. args[1], "BASE_PATH") .. "\n") --If it does print the contents.
-			else
-				GTerm.fuckalert("File does not exist.") --If it doesn't display an error
-			end
 		end
 	end
 
 	-- If there are two args it will be for an option and a file.
 	if number_of_args == 2 then
+		local file_path = tostring(GTerm.Path)
+		local file_name = tostring(args[2])
+		local tocat = file_path .. file_name
+
+		if !arg[1] == "-n" and !arg[1] == "-b" and !arg[1] == "-A" and !arg[1] == "-T" and !arg[1] == "-E"	then --If the options are not equal to any of the available options
+			GTerm.fuckalert("Invalid option '" .. args[1] .. "' Try 'cat --help for more information.'") -- Print an error
+			return --And return
+		end
 
 		-- -n (--number) print with line numbers
 		if args[1] == "-n" then --If the first argument is -n
-			if file.Exists(GTerm.Path .. args[2], "BASE_PATH") then --check if file exists. I will probably move that to a function when I can be fucked.
+			if !file_exists(tocat) then GTerm.fuckalert("File does not exist.") return end --Check if the file exists. If it doesn't display an error
 				local text = file.Read(GTerm.Path .. args[2], "BASE_PATH") --Text is the contents of the file specified in arg 2.
 				local lines = string.Explode("\n", text) --Break the file into a table. Each item in the table will be a line from the file.
 
 				for k, v in pairs(lines) do --For every line of the file
 					MsgC(Color(255,255,255), k .. " ", v .. "\n") --Print the line number and the line.
 				end
+		end
 
-			else
-				GTerm.fuckalert("File does not exist.") --If it doesn't exist we display an error.
-			end
-
-		elseif args[1] == "-b" then -- -b (--number-nonblank) Numbers all non blank lines
-			if file.Exists(GTerm.Path .. args[2], "BASE_PATH") then --If it exists yada yda
+		-- -b (--number-nonblank) Numbers all non blank lines
+		if args[1] == "-b" then 
+			if !file_exists(tocat) then GTerm.fuckalert("File does not exist.") return end --Check if the file exists. If it doesn't display an error
 				local text = file.Read(GTerm.Path .. args[2], "BASE_PATH") --text = the file
 				local lines = string.Explode("\n", text) -- Break the text up on every new line
 				local current_line = 1 --Current line is 1.
@@ -127,81 +150,27 @@ function GTerm.cat(client, command, arguments)
 						current_line = current_line + 1 -- Add one to the current line.
 					end
 				end
-			else
-				GTerm.fuckalert("File does not exist.") --Error if file does not exist.
-			end
-		elseif args[1] == "-A" then -- Print all characters. ^I for tab and $ for end of line
-			--There is a better way to do this but I couldn't think of anything.
-			if file.Exists(GTerm.Path .. args[2], "BASE_PATH") then --Check file
-				local text = file.Read(GTerm.Path .. args[2], "BASE_PATH") --Set text
-				local text = string.Explode("", text) --break the text up into a table. Each letter is a element in the table.
-				local ascii = {} --Ascii values for letter will go here.
-
-				for k, v in pairs(text) do --For each letter in text
-					table.insert(ascii, string.byte(v)) --Turn it to ascii
-				end
-				
-				for k, v in pairs(ascii) do --For each item in ascii
-					if v == 9 then --If it is a tab
-						text[k] = "^I" --Set the value in the text table to be ^I
-					elseif v == 13 then -- If it is an end of line character
-						text[k] = "$" --Change it to $
-					end
-				end
-
-				text = table.concat(text) --Concat the table
-				MsgC(Color(255,255,255), text .. "\n") --Print the new text
-			else
-				GT("File does not exist.")
-			end
-		elseif args[1] == "-T" then -- Prints tabs as ^I
-			--This is pretty much the exact same as -A and -E
-			if file.Exists(GTerm.Path .. args[2], "BASE_PATH") then --Check file
-				local text = file.Read(GTerm.Path .. args[2], "BASE_PATH") --Set text
-				local text = string.Explode("", text) --Explode text
-				local ascii = {} --Make ascii table
-
-				for k, v in pairs(text) do -- for rach letter
-					table.insert(ascii, string.byte(v)) --Turn to ascii
-				end
-
-				for k, v in pairs(ascii) do --For each item in ascii
-					if v == 9 then --chance the tabs
-						text[k] = "^I" -- to this
-					end
-				end
-
-				text = table.concat(text) --Concat table
-				MsgC(Color(255,255,255), text .. "\n") --Print the text
-			else
-				GTerm.fuckalert("File does not exist.")
-			end
-		elseif args[1] == "-E" then -- Prints end of line characters as $
-			--Same as others.
-			if file.Exists(GTerm.Path .. args[2], "BASE_PATH") then --Check file
-				local text = file.Read(GTerm.Path .. args[2], "BASE_PATH") --Read file
-				local text = string.Explode("", text) --Split text
-				local ascii = {} --ascii array
-
-				for k, v in pairs(text) do --For each letter
-					table.insert(ascii, string.byte(v)) --Make is ascii
-				end
-				
-				for k, v in pairs(ascii) do --For each ascii
-					if v == 13 then --if it is end of line
-						text[k] = "$" --Make is $
-					end
-				end
- 
-				text = table.concat(text) --Concat
-				MsgC(Color(255,255,255), text .. "\n") --Print
-			else
-				GTerm.fuckalert("File does not exist.")
-			end
-		else
-			GTerm.fuckalert("Invalid option '" .. args[1] .. "' Try 'cat --help for more information.'") --If the option is not valid print this.
 		end
 
+		-- Print all characters. ^I for tab and $ for end of line
+		if args[1] == "-A" or args[1] == "-T" or args[1] == "-E" then 
+			--There is a better way to do this but I couldn't think of anything.
+			if !file_exists(tocat) then GTerm.fuckalert("File does not exist.") return end --Check if the file exists. If it doesn't display an error
+				local ascii, text = cat_to_ascii(tocat)
+
+				for k, v in pairs(ascii) do --For each item in ascii
+					if v == 9 then --If it is a tab
+						if args[1] == "-A" or args[1] == "-T" then --If the option is -A or -T do this
+							text[k] = "^I" --Set the value in the text table to be ^I
+						end
+					elseif v == 13 then -- If it is an end of line character
+						if args[1] == "-A" or args[1] == "-E" then --If the option is -A or -E do this
+							text[k] = "$" --Change it to $
+						end
+					end
+				end
+				MsgC(Color(255,255,255), table.concat(text) .. "\n") --Print the new text
+		end
 
 	end
 
