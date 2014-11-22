@@ -50,7 +50,7 @@ function GTerm.ls() -- print files infos and directories
 			MsgC(Color(255,0,0), " | Last time edited -> ");
 			MsgC(Color(150,150,255), os.date( "%d.%m.%y", file.Time(GTerm.Path .. v, "BASE_PATH")) .. "\n");
 		end
-end
+	end
 
 
 
@@ -165,7 +165,7 @@ function cat_with_options(f, op)
 			end
 	elseif op == "-A" or op == "-T" or op == "-E" then -- Print all characters. ^I for tab and $ for end of line
 		--There is a better way to do this but I couldn't think of anything.
-			local ascii, text = cat_to_ascii(f)
+		local ascii, text = cat_to_ascii(f)
 
 			for k, v in pairs(ascii) do --For each item in ascii
 				if v == 9 then --If it is a tab
@@ -179,8 +179,8 @@ function cat_with_options(f, op)
 				end
 			end
 			MsgC(Color(255,255,255), table.concat(text) .. "\n") --Print the new text
-	
-	else
+			
+		else
 		GTerm.fuckalert("Invalid option '" .. op .. "' Try 'cat --help for more information.'") -- Print an error
 	end
 end
