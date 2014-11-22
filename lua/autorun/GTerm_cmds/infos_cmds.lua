@@ -67,8 +67,8 @@ end
 
 function GTerm.cat(client, command, arguments)
 	pathfixmultipleslash() --Fix directory if it is broken
-	args = arguments 
-	number_of_args = table.getn(args)
+	local args = arguments 
+	local number_of_args = table.getn(args)
 
 	function cat_to_ascii(str) --Turn a string into an array of ascii codes
 		if !file_exists(str) then return end --If the file does not exist don't do this.
@@ -90,7 +90,6 @@ function GTerm.cat(client, command, arguments)
 		local file_name = tostring(args[1])
 		local tocat = file_path .. file_name
 
-
 		if args[1] == "--help" or args[1] == "-h" then --If the arg is --help or -h print the help
 			MsgC(Color(255,255,255), "Cat Help:\n")
 			MsgC(Color(255,255,255), "Usage:\n")
@@ -104,21 +103,19 @@ function GTerm.cat(client, command, arguments)
 			MsgC(Color(255,255,255), " -E") GTerm.writeSpaces(20 - 2) MsgC(Color(255,255,255), "Print end of line charaters as $\n\n")
 			MsgC(Color(255,255,255), " More features to come in the future.\n")
 
-			
 		else --Otherwise it will just print a file.
 			if file_name[-1] == "*" then --If the last character of the file string is * then
 				local files, dirs = file.Find(tocat, "BASE_PATH") --Get every file name in the specified directory
 				for k, v in pairs(files) do --For each file
 					local loc = string.sub(tocat, 1, -2) --Remove the * from the path
-					local file_path = loc..v --Append the file name to the path
-					if !file_exists(file_path) then GTerm.fuckalert("File does not exist.") return end --Check if the file exists. If it doesn't display an error
-					cat_without_options(file_path) --View the cat_without_options function below.
+					local file_name = loc..v --Append the file name to the path
+					if !file_exists(file_name) then GTerm.fuckalert("File does not exist.") return end --Check if the file exists. If it doesn't display an error
+					cat_without_options(file_name) --View the cat_without_options function below.
 				end
 			else --If the last character is not * just do this.
 				if !file_exists(tocat) then GTerm.fuckalert("File does not exist.") return end --Check if the file exists. If it doesn't display an error
 				cat_without_options(tocat) --view function below
 			end
-
 		end
 	end
 
@@ -132,19 +129,15 @@ function GTerm.cat(client, command, arguments)
 			local files, dirs = file.Find(tocat, "BASE_PATH") --Get every file and folder in the directory
 			for k, v in pairs(files) do --For each file
 				local loc = string.sub(tocat, 1, -2) --Remove the * from the string
-				if !file_exists(loc..v) then GTerm.fuckalert("File does not exist.") return end --Check if the file exists. If it doesn't display an error
-				cat_with_options(loc..v, args[1]) --View the cat_with_options function below
+				local file_name = loc..v
+				if !file_exists(file_name) then GTerm.fuckalert("File does not exist.") return end --Check if the file exists. If it doesn't display an error
+				cat_with_options(file_name, args[1]) --View the cat_with_options function below
 			end
 		else --If it is just a normal file
 			if !file_exists(tocat) then GTerm.fuckalert("File does not exist.") return end --Check if the file exists. If it doesn't display an error
 			cat_with_options(tocat, args[1]) --Print normally
 		end
-
-
-		
-
 	end
-
 end
 
 --This function is for printing a file normally, without options.
