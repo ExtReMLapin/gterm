@@ -13,7 +13,6 @@ local function file_exists(f)
 	if file.Exists(f, "BASE_PATH") then return true end
 end
 
-
 function GTerm.ls() -- print files infos and directories
 	pathfixmultipleslash()
 	local maxsize = 0;
@@ -51,8 +50,6 @@ function GTerm.ls() -- print files infos and directories
 			MsgC(Color(150,150,255), os.date( "%d.%m.%y", file.Time(GTerm.Path .. v, "BASE_PATH")) .. "\n");
 		end
 	end
-
-
 
 ---------------------------
 ------------Cat------------
