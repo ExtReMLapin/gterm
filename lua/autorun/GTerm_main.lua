@@ -16,10 +16,10 @@ include("GTerm_cmds/file_analysis.lua")
 include("GTerm_cmds/infos_cmds.lua")
 
 if SERVER then
-	concommand.Add("pwd", GTerm.pwd)
-	concommand.Add("ls",  GTerm.ls)
-	concommand.Add("cd",  GTerm.cd)
-	concommand.Add("mkdir", GTerm.mkdir)
-	concommand.Add("specs", GTerm.specs)
-	concommand.Add("cat", GTerm.cat) -- meow
+	concommand.Add("pwd", 	GTerm.pwd, nil, "Print the current directory")
+	concommand.Add("ls",  	GTerm.ls, nil, "Print files and folders in the current directory")
+	concommand.Add("cd",  	GTerm.cd, GTerm.get_all_poss_paths, "Move to another directory")
+	concommand.Add("mkdir", GTerm.mkdir, nil, "Make a dir")
+	concommand.Add("specs", GTerm.specs, nil, "Get specs" )
+	concommand.Add("cat", 	GTerm.cat, nil, "Grint a file") -- meow
 end

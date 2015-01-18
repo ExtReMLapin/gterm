@@ -50,3 +50,14 @@ function GTerm.cd(ply, cmd, args) -- fall back !
 		end
 	end
 end
+
+function GTerm.get_all_poss_paths()
+	if not GTerm.Path then return end
+	local tmppth = GTerm.Path;
+	local tbl = {}
+	local tbl1, tbl2 = file.Find(tmppth .. "*", "BASE_PATH")
+	for k, v in pairs(tbl2) do
+		table.insert(tbl, "cd " .. v .. "/")
+	end
+	return tbl;
+end
