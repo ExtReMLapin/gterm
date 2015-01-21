@@ -21,5 +21,5 @@ if SERVER then
 	concommand.Add("cd",  	GTerm.cd, GTerm.get_all_poss_paths, "Move to another directory")
 	concommand.Add("mkdir", GTerm.mkdir, nil, "Make a dir")
 	concommand.Add("specs", GTerm.specs, nil, "Get specs" )
-	concommand.Add("cat", 	GTerm.cat, nil, "Grint a file") -- meow
+	concommand.Add("cat", 	GTerm.cat, nil, "Print a file") -- meow
 end
