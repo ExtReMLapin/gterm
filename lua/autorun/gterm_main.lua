@@ -10,10 +10,10 @@ function GTerm.fuckalert(message)
 	MsgC(Color(255,0,0), "   /!\\ \n");
 end
 
-include("GTerm_cmds/move_cmds.lua")
-include("GTerm_cmds/fileio_cmds.lua")
-include("GTerm_cmds/file_analysis.lua")
-include("GTerm_cmds/infos_cmds.lua")
+include("gterm_cmds/move_cmds.lua")
+include("gterm_cmds/fileio_cmds.lua")
+include("gterm_cmds/file_analysis.lua")
+include("gterm_cmds/infos_cmds.lua")
 
 if SERVER then
 	concommand.Add("pwd", 	GTerm.pwd, nil, "Print the current directory")
